@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:spring="http://www.mulesoft.org/schema/mule/spring" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/spring/current/mule-spring.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9f913f80-45d9-4ba9-beb5-db520b4e3ff8" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="interfaceFlow" doc:id="79b863d5-a4ca-4c20-9e89-b23e38cf2f1b" >
+		<http:listener doc:name="Listener" doc:id="48797103-d457-43ca-8b99-395d01e13ecb" config-ref="HTTP_Listener_config" path="/test"/>
+		<!-- [STUDIO:"security-schema-main-flow"]<flow-ref doc:name="security-schema-main-flow" doc:id="bb26c89c-8f3e-4d62-8cd1-ebc921490930" name="security-schema-main-flow" /> [STUDIO] -->
+		<ee:transform doc:name="Transform Message" doc:id="9b4143fb-caee-4b1e-9d5e-4fb860f17925" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Success"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<!-- [STUDIO:"security-schema-main-flow"]<sub-flow name="security-schema-main-flow" doc:id="898543a6-a2b3-4e3a-a78f-4d0bd36501df" >
+		<http:basic-security-filter doc:name="Spring Basic security filter" doc:id="a272c011-9c9c-48b6-98f7-1d12328b3d0e" realm="mule" />
+		<spring:authorization-filter doc:name="Spring Authorization filter" doc:id="d5d8e24e-9c21-4968-9d0b-a7276774594e" requiredAuthorities="ROLE_ADMIN" />
+	</sub-flow> [STUDIO] -->
+</mule>
