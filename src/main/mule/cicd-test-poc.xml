@@ -13,7 +13,7 @@ http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/s
 output application/json
 ---
 {
-	"message": "Success"
+	"message": "Successs"
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
